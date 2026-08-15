@@ -11,6 +11,7 @@ type CellarWine = {
   drink_from_year: number | null;
   drink_until_year: number | null;
   shelves: { name: string }[];
+  wine_images: { image_type: "front" | "back"; storage_path: string }[];
 };
 
 function wineTitle(wine: CellarWine) {
@@ -31,13 +32,24 @@ export default async function Home() {
   const { data, error } = await supabase
     .from("wines")
     .select(
-      "id, producer, name, vintage_year, current_quantity, region, drink_from_year, drink_until_year, shelves(name)",
+      "id, producer, name, vintage_year, current_quantity, region, drink_from_year, drink_until_year, shelves(name), wine_images(image_type, storage_path)",
     )
     .eq("status", "active")
     .gt("current_quantity", 0)
     .order("updated_at", { ascending: false });
 
   const wines = (data ?? []) as CellarWine[];
+  const thumbnailPaths = wines.map((wine) => {
+    const path = wine.wine_images.find((image) => image.image_type === "front")?.storage_path;
+    return path ? path.replace(/\.jpg$/, "-thumb.jpg") : null;
+  });
+  const pathsToSign = thumbnailPaths.filter((path): path is string => Boolean(path));
+  const { data: signedImages } = pathsToSign.length
+    ? await supabase.storage.from("wine-labels").createSignedUrls(pathsToSign, 3600)
+    : { data: [] };
+  const signedUrlByPath = new Map(
+    (signedImages ?? []).map((image) => [image.path, image.signedUrl]),
+  );
   const bottleCount = wines.reduce(
     (total, wine) => total + wine.current_quantity,
     0,
@@ -108,12 +120,21 @@ export default async function Home() {
             <span>Recently updated</span>
           </div>
           <ul>
-            {wines.map((wine) => (
+            {wines.map((wine, index) => (
               <li key={wine.id}>
                 <Link className="wine-row" href={`/wines/${wine.id}`}>
-                  <div className="label-placeholder" aria-hidden="true">
-                    <span>{wine.producer?.slice(0, 1) ?? "W"}</span>
-                  </div>
+                  {thumbnailPaths[index] && signedUrlByPath.get(thumbnailPaths[index]!) ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      className="label-thumbnail"
+                      src={signedUrlByPath.get(thumbnailPaths[index]!)!}
+                      alt=""
+                    />
+                  ) : (
+                    <div className="label-placeholder" aria-hidden="true">
+                      <span>{wine.producer?.slice(0, 1) ?? "W"}</span>
+                    </div>
+                  )}
                   <div className="wine-row-copy">
                     <p className="wine-name">{wineTitle(wine)}</p>
                     <p className="wine-vintage">

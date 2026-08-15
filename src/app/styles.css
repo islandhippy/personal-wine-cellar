@@ -504,6 +504,15 @@ button:disabled {
   font-size: 1.3rem;
 }
 
+.label-thumbnail {
+  width: 3.6rem;
+  height: 4.9rem;
+  border: 1px solid var(--divider);
+  border-radius: 0.25rem;
+  background: var(--surface);
+  object-fit: cover;
+}
+
 .wine-row-copy {
   min-width: 0;
 }
@@ -591,6 +600,306 @@ button:disabled {
   border-top: 1px solid var(--divider);
   color: var(--muted);
   font-size: 0.85rem;
+}
+
+.form-shell {
+  width: min(100%, 44rem);
+  margin: 0 auto;
+  padding: max(1.25rem, env(safe-area-inset-top))
+    max(1rem, env(safe-area-inset-right))
+    max(3rem, env(safe-area-inset-bottom))
+    max(1rem, env(safe-area-inset-left));
+}
+
+.form-header {
+  padding-bottom: 2rem;
+}
+
+.form-header .eyebrow {
+  margin-top: 2.25rem;
+}
+
+.form-title {
+  font-size: clamp(3rem, 14vw, 5rem);
+}
+
+.form-header > p:last-child {
+  max-width: 36rem;
+  margin: 1.25rem 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.wine-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.form-section {
+  padding: 1.3rem 1rem 1.5rem;
+  border: 1px solid var(--divider);
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--surface) 64%, transparent);
+}
+
+.form-section-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.form-section-heading > p {
+  display: grid;
+  flex: 0 0 auto;
+  width: 1.65rem;
+  height: 1.65rem;
+  place-items: center;
+  margin: 0.05rem 0 0;
+  border: 1px solid var(--divider);
+  border-radius: 50%;
+  color: var(--accent);
+  font-family: Iowan Old Style, Baskerville, "Times New Roman", serif;
+  font-size: 0.9rem;
+}
+
+.form-section-heading h2 {
+  margin: 0;
+  font-family: Iowan Old Style, Baskerville, "Times New Roman", serif;
+  font-size: 1.55rem;
+  font-weight: 600;
+}
+
+.form-section-heading span {
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.photo-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+}
+
+.photo-field {
+  position: relative;
+  display: grid;
+  min-height: 12.5rem;
+  place-items: center;
+  overflow: hidden;
+  border: 1px dashed #b6a496;
+  border-radius: 0.55rem;
+  background: var(--background);
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.photo-field.has-photo {
+  border-style: solid;
+}
+
+.photo-field input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.photo-field img {
+  width: 100%;
+  height: 12.5rem;
+  object-fit: contain;
+}
+
+.photo-prompt {
+  display: grid;
+  justify-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.photo-prompt strong {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  font-size: 1.35rem;
+  font-weight: 400;
+}
+
+.photo-prompt small,
+.privacy-note {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 400;
+}
+
+.privacy-note {
+  margin: 0.75rem 0 0;
+  text-align: center;
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 0.8rem;
+}
+
+.field-grid label,
+.bottle-size-field {
+  display: grid;
+  min-width: 0;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.field-grid label > span:first-child,
+.bottle-size-field legend {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+
+.field-grid input,
+.field-grid select,
+.field-grid textarea {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.65rem 0.7rem;
+  border: 1px solid var(--divider);
+  border-radius: 0.45rem;
+  outline: 0;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+
+.field-grid textarea {
+  min-height: 6rem;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.field-grid input:focus,
+.field-grid select:focus,
+.field-grid textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgb(111 36 56 / 10%);
+}
+
+.full-field {
+  grid-column: 1 / -1;
+}
+
+.segmented-control {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 3rem;
+  overflow: hidden;
+  border: 1px solid var(--divider);
+  border-radius: 0.45rem;
+}
+
+.segmented-control label {
+  position: relative;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.segmented-control label + label {
+  border-left: 1px solid var(--divider);
+}
+
+.segmented-control input {
+  position: absolute;
+  opacity: 0;
+}
+
+.segmented-control span {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  font-size: 0.76rem;
+  font-weight: 650;
+}
+
+.segmented-control input:checked + span {
+  background: var(--accent);
+  color: white;
+}
+
+.money-input {
+  position: relative;
+  display: block !important;
+}
+
+.money-input b {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 0.7rem;
+  font-weight: 500;
+  transform: translateY(-50%);
+}
+
+.money-input input {
+  padding-left: 1.55rem;
+}
+
+.form-submit {
+  position: sticky;
+  z-index: 3;
+  bottom: 0;
+  display: grid;
+  gap: 0.7rem;
+  margin: 0 -1rem;
+  padding: 1rem max(1rem, env(safe-area-inset-right))
+    max(1rem, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--divider);
+  background: rgb(246 240 230 / 94%);
+  backdrop-filter: blur(12px);
+}
+
+.form-submit p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  text-align: center;
+}
+
+@media (min-width: 48rem) {
+  .form-shell {
+    padding: 3rem;
+  }
+
+  .form-section {
+    padding: 1.75rem;
+  }
+
+  .photo-field,
+  .photo-field img {
+    min-height: 17rem;
+    height: 17rem;
+  }
+
+  .form-submit {
+    position: static;
+    margin: 0;
+    padding: 1rem 0 0;
+    border: 0;
+    background: transparent;
+    backdrop-filter: none;
+  }
 }
 
 @media (min-width: 48rem) {
