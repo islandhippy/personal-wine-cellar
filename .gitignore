@@ -24,6 +24,7 @@ test-results/
 # Local ChatGPT project reference material
 AGENTS.md
 sources/
+.local-tools/
 
 # Vercel local settings
 .vercel/
