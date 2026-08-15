@@ -2,9 +2,11 @@
 
 A private, mobile-first personal wine cellar and wine diary. The application is designed for a single EuroCave fridge with six shelves.
 
+Production address: `https://personal-wine-cellar-six.vercel.app`
+
 ## Current stage
 
-This repository currently contains only the Next.js Progressive Web App foundation. Inventory, authentication, photographs and database features have not yet been implemented.
+This repository contains the Next.js Progressive Web App foundation, versioned database migrations and the application-side authentication flow. The live Supabase and Vercel services must be configured before sign-in can be used.
 
 ## Intended platform
 

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <main className="shell">
@@ -11,6 +13,9 @@ export default function Home() {
           <p>Project foundation ready.</p>
           <span>Inventory features will be added in the next stages.</span>
         </div>
+        <Link className="security-link" href="/security/passkeys">
+          Face ID &amp; security
+        </Link>
       </section>
     </main>
   );

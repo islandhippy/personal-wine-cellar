@@ -80,6 +80,175 @@ h1 {
   line-height: 1.5;
 }
 
+.security-link {
+  display: inline-block;
+  margin-top: 2rem;
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 650;
+  text-underline-offset: 0.2em;
+}
+
+.auth-shell {
+  display: grid;
+  min-height: 100svh;
+  align-items: center;
+  padding: max(2rem, env(safe-area-inset-top))
+    max(1.25rem, env(safe-area-inset-right))
+    max(2rem, env(safe-area-inset-bottom))
+    max(1.25rem, env(safe-area-inset-left));
+}
+
+.auth-panel {
+  width: min(100%, 30rem);
+  margin: 0 auto;
+}
+
+.auth-title,
+.security-title {
+  margin: 0;
+  font-family: Iowan Old Style, Baskerville, "Times New Roman", serif;
+  font-size: clamp(3rem, 14vw, 4.75rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+
+.security-title {
+  font-size: clamp(2.7rem, 12vw, 4.25rem);
+}
+
+.auth-intro {
+  margin: 1.4rem 0 2.25rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.login-actions,
+.passkey-manager {
+  display: grid;
+  gap: 1rem;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.primary-action,
+.secondary-action {
+  min-height: 3.25rem;
+  border-radius: 0.65rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary-action {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: white;
+}
+
+.secondary-action {
+  width: 100%;
+  margin-top: 0.75rem;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+.recovery-panel {
+  padding: 1rem 0;
+  border-top: 1px solid var(--divider);
+  border-bottom: 1px solid var(--divider);
+}
+
+.recovery-panel summary {
+  min-height: 2.75rem;
+  color: var(--accent);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.recovery-panel p,
+.form-message {
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+.recovery-panel label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.875rem;
+  font-weight: 650;
+}
+
+.recovery-panel input {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--divider);
+  border-radius: 0.5rem;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.form-message {
+  margin: 0;
+}
+
+.passkey-status {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-top: 1px solid var(--divider);
+  border-bottom: 1px solid var(--divider);
+}
+
+.passkey-status span {
+  color: var(--muted);
+}
+
+.passkey-list {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.passkey-list li {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.9rem;
+  border: 1px solid var(--divider);
+  border-radius: 0.5rem;
+  background: var(--surface);
+}
+
+.passkey-list span {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.text-action {
+  min-height: 2.75rem;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
 @media (min-width: 48rem) {
   .shell {
     padding: 4rem;
