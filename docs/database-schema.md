@@ -22,7 +22,7 @@ erDiagram
 - `inventory_transactions`: the permanent quantity ledger.
 - `drinking_events`: one diary entry per consumed bottle, with an optional 1–10 rating and tasting note.
 - `grape_varieties` and `wine_grape_varieties`: reusable grape names that allow future preference analysis.
-- `wine_images`: metadata for one front and one optional back image. The private Storage objects are configured separately.
+- `wine_images`: metadata for one front and one optional back image. Originals live in the private `wine-labels` Storage bucket under an owner-scoped path.
 
 ## Inventory integrity
 
