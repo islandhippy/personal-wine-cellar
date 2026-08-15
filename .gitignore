@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Next.js output
+.next/
+out/
+
+# Local environment variables and secrets
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Test and coverage output
+coverage/
+playwright-report/
+test-results/
+
+# Operating-system and editor files
+.DS_Store
+*.swp
+
+# Local ChatGPT project reference material
+AGENTS.md
+sources/
+
+# Vercel local settings
+.vercel/
+
+# TypeScript build information
+*.tsbuildinfo
+next-env.d.ts

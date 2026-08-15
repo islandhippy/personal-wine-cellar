@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">My Cellar</title>
+  <rect width="512" height="512" rx="112" fill="#f6f0e6"/>
+  <path fill="#6f2438" d="M174 100h164c0 83-19 135-58 158v91h61v63H171v-63h61v-91c-39-23-58-75-58-158Zm58 60c3 39 11 62 24 76 13-14 21-37 24-76h-48Z"/>
+</svg>

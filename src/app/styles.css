@@ -1,0 +1,95 @@
+:root {
+  --background: #f6f0e6;
+  --surface: #fffaf1;
+  --text: #241e1b;
+  --muted: #736963;
+  --accent: #6f2438;
+  --divider: #ded3c4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--background);
+  color: var(--text);
+}
+
+body {
+  min-height: 100svh;
+  margin: 0;
+  background: var(--background);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.shell {
+  display: grid;
+  min-height: 100svh;
+  place-items: center;
+  padding: max(2rem, env(safe-area-inset-top))
+    max(1.25rem, env(safe-area-inset-right))
+    max(2rem, env(safe-area-inset-bottom))
+    max(1.25rem, env(safe-area-inset-left));
+}
+
+.intro {
+  width: min(100%, 36rem);
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-family: Iowan Old Style, Baskerville, "Times New Roman", serif;
+  font-size: clamp(3rem, 14vw, 5rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+
+.summary {
+  max-width: 31rem;
+  margin: 1.5rem 0 2.5rem;
+  color: var(--muted);
+  font-size: clamp(1rem, 4.2vw, 1.2rem);
+  line-height: 1.65;
+}
+
+.foundation-note {
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--divider);
+}
+
+.foundation-note p {
+  margin: 0 0 0.35rem;
+  font-weight: 650;
+}
+
+.foundation-note span {
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+@media (min-width: 48rem) {
+  .shell {
+    padding: 4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+}
