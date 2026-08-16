@@ -28,6 +28,7 @@ type DrinkingEvent = {
   drank_at: string;
   rating: number | null;
   tasting_note: string | null;
+  date_known: boolean;
 };
 
 type Transaction = {
@@ -112,7 +113,7 @@ export default async function WineDetailPage({
         .eq("wine_id", id),
       supabase
         .from("drinking_events")
-        .select("id, drank_at, rating, tasting_note")
+        .select("id, drank_at, rating, tasting_note, date_known")
         .eq("wine_id", id)
         .order("drank_at", { ascending: false }),
       supabase
@@ -255,7 +256,7 @@ export default async function WineDetailPage({
               {events.map((event) => (
                 <li key={event.id}>
                   <div>
-                    <time dateTime={event.drank_at}>{formatDate(event.drank_at)}</time>
+                    {event.date_known ? <time dateTime={event.drank_at}>{formatDate(event.drank_at)}</time> : <span className="unknown-date">Date unknown</span>}
                     {event.rating !== null ? <strong>{event.rating}/10</strong> : null}
                   </div>
                   {event.tasting_note ? <p>{event.tasting_note}</p> : <p className="quiet-copy">No tasting note.</p>}

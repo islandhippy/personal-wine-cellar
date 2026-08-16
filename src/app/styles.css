@@ -950,6 +950,20 @@ button:disabled {
   color: var(--accent);
 }
 
+.past-tasting-action {
+  width: 100%;
+  min-height: 2.9rem;
+  margin-top: 0.65rem;
+  border: 1px solid var(--divider);
+  border-radius: 0.55rem;
+  background: transparent;
+  color: var(--accent);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 .action-panel {
   margin-top: 0.8rem;
   padding: 1.15rem;
@@ -1120,6 +1134,11 @@ button:disabled {
 }
 
 .memory-list time {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.unknown-date {
   color: var(--muted);
   font-size: 0.78rem;
 }

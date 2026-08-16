@@ -33,7 +33,7 @@ export async function POST(request: Request) {
 
   const { data: wines, error } = await supabase
     .from("wines")
-    .select("id, name, producer, vintage_year, bottle_size_ml, country, region, appellation, wine_type, current_quantity, drink_from_year, drink_until_year, cellar_notes, purchase_price_pence, shelves(name), wine_grape_varieties(grape_varieties(name)), drinking_events(rating, tasting_note, drank_at)")
+    .select("id, name, producer, vintage_year, bottle_size_ml, country, region, appellation, wine_type, current_quantity, drink_from_year, drink_until_year, cellar_notes, purchase_price_pence, shelves(name), wine_grape_varieties(grape_varieties(name)), drinking_events(rating, tasting_note, drank_at, date_known)")
     .eq("status", "active")
     .gt("current_quantity", 0)
     .order("drink_until_year", { ascending: true, nullsFirst: false });

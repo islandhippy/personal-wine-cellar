@@ -37,3 +37,7 @@ Use this object-path convention when image upload is implemented:
 The corresponding path is stored in `public.wine_images.storage_path`. Export
 can therefore enumerate the metadata and download the original photographs
 independently of the application.
+
+Migration `202608160002_past_tastings.sql` adds diary memories from before
+inventory tracking. These events may have an unknown date and never change the
+current bottle quantity or create an inventory transaction.

@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
-type OpenPanel = "drink" | "add" | null;
+type OpenPanel = "drink" | "add" | "past" | null;
 
 function today() {
   return new Date().toISOString().slice(0, 10);
@@ -76,6 +76,32 @@ export function WineActions({ wineId, quantity }: { wineId: string; quantity: nu
     router.refresh();
   }
 
+  async function addPastTasting(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setBusy(true);
+    setMessage("Adding this wine memory…");
+    const form = new FormData(event.currentTarget);
+    const rating = nullableText(form, "rating");
+    const date = nullableText(form, "drank_at");
+    const { error } = await createClient().rpc("record_past_tasting", {
+      p_wine_id: wineId,
+      p_drank_at: date ? new Date(date).toISOString() : null,
+      p_rating: rating ? Number(rating) : null,
+      p_tasting_note: nullableText(form, "tasting_note"),
+    });
+
+    setBusy(false);
+    if (error) {
+      setMessage(error.message.includes("rating or tasting note")
+        ? "Add a rating or tasting note first."
+        : "The past tasting could not be recorded. Please try again.");
+      return;
+    }
+    setPanel(null);
+    setMessage("Past tasting added. Your bottle quantity has not changed.");
+    router.refresh();
+  }
+
   return (
     <section className="wine-actions-section" aria-label="Wine actions">
       <div className="wine-primary-actions">
@@ -86,6 +112,9 @@ export function WineActions({ wineId, quantity }: { wineId: string; quantity: nu
           Add Bottles
         </button>
       </div>
+      <button className="past-tasting-action" disabled={busy} onClick={() => open("past")} type="button">
+        Add Past Tasting
+      </button>
 
       {panel === "drink" ? (
         <form className="action-panel" onSubmit={drinkOne}>
@@ -118,6 +147,22 @@ export function WineActions({ wineId, quantity }: { wineId: string; quantity: nu
             <label className="action-full-field"><span>Note</span><textarea name="note" placeholder="Optional" rows={3} /></label>
           </div>
           <button className="confirm-action" disabled={busy} type="submit">{busy ? "Adding…" : "Add Bottles"}</button>
+        </form>
+      ) : null}
+
+      {panel === "past" ? (
+        <form className="action-panel" onSubmit={addPastTasting}>
+          <div className="action-panel-heading">
+            <div><p className="eyebrow">Wine memory</p><h2>Add a past tasting</h2></div>
+            <button aria-label="Close Add Past Tasting" onClick={() => setPanel(null)} type="button">×</button>
+          </div>
+          <p className="action-intro">Record a previous experience without changing the number of bottles in your cellar.</p>
+          <div className="action-field-grid">
+            <label><span>Date, if remembered</span><input max={today()} name="drank_at" type="date" /></label>
+            <label><span>Personal rating</span><select defaultValue="" name="rating"><option value="">No rating</option>{Array.from({ length: 10 }, (_, index) => index + 1).map((rating) => <option key={rating} value={rating}>{rating}/10</option>)}</select></label>
+            <label className="action-full-field"><span>Tasting note</span><textarea name="tasting_note" placeholder="Optional—what do you remember?" rows={4} /></label>
+          </div>
+          <button className="confirm-action" disabled={busy} type="submit">{busy ? "Adding…" : "Add Past Tasting"}</button>
         </form>
       ) : null}
 

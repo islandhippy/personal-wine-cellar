@@ -68,8 +68,8 @@ export async function GET(request: Request) {
     const { data, error } = await supabase.from("drinking_events").select("*, wines(producer, name, vintage_year, bottle_size_ml), shelves(name)").order("drank_at");
     if (error) return new Response("Export could not be prepared", { status: 500 });
     return csvResponse(`wine-diary-${stamp}.csv`, makeCsv(
-      ["drinking_event_id", "wine_id", "producer", "wine_cuvee", "vintage", "bottle_size_ml", "drank_at", "rating_out_of_10", "tasting_note", "shelf", "created_at", "modified_at"],
-      (data ?? []).map((row) => { const wine = Array.isArray(row.wines) ? row.wines[0] : row.wines; return [row.id, row.wine_id, wine?.producer, wine?.name, wine?.vintage_year ?? "NV", wine?.bottle_size_ml, row.drank_at, row.rating, row.tasting_note, relationName(row.shelves), row.created_at, row.updated_at]; }),
+      ["drinking_event_id", "wine_id", "producer", "wine_cuvee", "vintage", "bottle_size_ml", "drank_at", "date_known", "rating_out_of_10", "tasting_note", "shelf", "created_at", "modified_at"],
+      (data ?? []).map((row) => { const wine = Array.isArray(row.wines) ? row.wines[0] : row.wines; return [row.id, row.wine_id, wine?.producer, wine?.name, wine?.vintage_year ?? "NV", wine?.bottle_size_ml, row.drank_at, row.date_known, row.rating, row.tasting_note, relationName(row.shelves), row.created_at, row.updated_at]; }),
     ));
   }
 
