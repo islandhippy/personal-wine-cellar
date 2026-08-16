@@ -9,7 +9,7 @@ function safeCell(value: unknown) {
 export function makeCsv(headers: string[], rows: unknown[][]) {
   return `\uFEFF${[headers, ...rows]
     .map((row) => row.map(safeCell).join(","))
-    .join("\r\n")}\r\n`;
+    .join("\n")}\n`;
 }
 
 export function csvResponse(filename: string, csv: string) {
