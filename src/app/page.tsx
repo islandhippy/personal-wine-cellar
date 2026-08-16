@@ -159,7 +159,7 @@ export default async function Home() {
   const specialWines = wines
     .filter((wine) => (wine.purchase_price_pence ?? 0) > 3000)
     .sort((a, b) => (b.purchase_price_pence ?? 0) - (a.purchase_price_pence ?? 0))
-    .slice(0, 4);
+    .slice(0, 6);
   const specialPaths = specialWines.map((wine) => {
     const path = wine.wine_images?.find((image) => image.image_type === "front")?.storage_path;
     return path ? thumbnailPath(path) : null;
