@@ -19,6 +19,21 @@ export async function GET(request: Request) {
   const file = new URL(request.url).searchParams.get("file");
   const stamp = today();
 
+  if (file === "inventory") {
+    const { data, error } = await supabase
+      .from("wines")
+      .select("producer, name, vintage_year, current_quantity, drink_from_year, drink_until_year, shelves(name)")
+      .order("producer")
+      .order("name")
+      .order("vintage_year");
+    if (error) return new Response("Export could not be prepared", { status: 500 });
+
+    return csvResponse(`wine-inventory-${stamp}.csv`, makeCsv(
+      ["producer", "wine_cuvee", "vintage", "current_quantity", "drink_from_year", "drink_until_year", "shelf"],
+      (data ?? []).map((wine) => [wine.producer, wine.name, wine.vintage_year ?? "NV", wine.current_quantity, wine.drink_from_year, wine.drink_until_year, relationName(wine.shelves)]),
+    ));
+  }
+
   if (file === "cellar") {
     const [{ data: wines, error }, { data: links, error: grapeError }] = await Promise.all([
       supabase.from("wines").select("*, shelves(name)").order("created_at"),

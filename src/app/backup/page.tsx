@@ -6,6 +6,11 @@ export const metadata = { title: "Export & Backup" };
 
 const exports = [
   {
+    href: "/backup/export?file=inventory",
+    title: "Inventory",
+    copy: "A concise stock list: wine, vintage, quantity, drinking window and shelf.",
+  },
+  {
     href: "/backup/export?file=cellar",
     title: "Cellar",
     copy: "Wines, quantities, shelves, drinking windows, grapes, prices and notes.",
