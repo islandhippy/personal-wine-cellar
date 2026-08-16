@@ -1885,3 +1885,48 @@ button:disabled {
     margin-top: 6rem;
   }
 }
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--divider);
+  border-bottom: 1px solid var(--divider);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.settings-row span { display: grid; gap: 0.25rem; }
+.settings-row strong { font-family: var(--font-serif); font-size: 1.05rem; }
+.settings-row small { color: var(--muted); line-height: 1.4; }
+.settings-row b { color: var(--accent); font-size: 1.7rem; font-weight: 400; }
+
+.backup-shell {
+  width: min(100%, 46rem);
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: max(1.25rem, env(safe-area-inset-top)) 1rem max(3rem, env(safe-area-inset-bottom));
+}
+
+.backup-header { padding: 0.5rem 0 1.5rem; }
+.backup-header .back-link { display: inline-block; margin-bottom: 2rem; color: var(--accent); text-decoration: none; }
+.backup-header h1 { margin: 0.35rem 0 0.7rem; font-family: var(--font-serif); font-size: clamp(2.2rem, 10vw, 3.5rem); font-weight: 500; letter-spacing: -0.035em; }
+.backup-header > p:last-child { max-width: 35rem; margin: 0; color: var(--muted); line-height: 1.6; }
+
+.backup-list { border-top: 1px solid var(--divider); }
+.backup-list article { display: grid; gap: 1rem; padding: 1.35rem 0; border-bottom: 1px solid var(--divider); }
+.backup-list h2 { margin: 0 0 0.3rem; font-family: var(--font-serif); font-size: 1.25rem; font-weight: 600; }
+.backup-list p { margin: 0; color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
+.backup-download { display: grid; min-height: 2.8rem; place-items: center; border: 1px solid var(--accent); border-radius: 999px; color: var(--accent); font-size: 0.82rem; font-weight: 700; text-decoration: none; }
+.backup-download:active { background: var(--accent); color: white; }
+
+.backup-note { margin-top: 1.5rem; padding: 1rem; border-radius: 0.55rem; background: var(--surface); }
+.backup-note strong { font-size: 0.85rem; }
+.backup-note p { margin: 0.35rem 0 0; color: var(--muted); font-size: 0.8rem; line-height: 1.5; }
+
+@media (min-width: 36rem) {
+  .backup-list article { grid-template-columns: 1fr 9rem; align-items: center; }
+}

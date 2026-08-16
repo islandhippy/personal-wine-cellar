@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { PasskeyManager } from "./passkey-manager";
@@ -29,6 +30,13 @@ export default async function PasskeysPage() {
           checked by the iPhone and is never shared with the app.
         </p>
         <PasskeyManager />
+        <Link className="settings-row" href="/backup">
+          <span>
+            <strong>Export &amp; Backup</strong>
+            <small>Download your cellar data and photograph list</small>
+          </span>
+          <b aria-hidden="true">›</b>
+        </Link>
       </section>
     </main>
   );
