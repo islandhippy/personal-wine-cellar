@@ -276,22 +276,6 @@ export default async function Home() {
             ) : <p className="overview-empty">Add purchase prices to reveal special bottles here.</p>}
           </section>
 
-          <section className="overview-section" aria-labelledby="unusual-title">
-            <div className="overview-heading">
-              <div><p className="eyebrow">Explore</p><h2 id="unusual-title">Less common in my cellar</h2></div>
-              <span>One or two wines</span>
-            </div>
-            {lessCommonCountries.length ? (
-              <div className="unusual-countries">
-                {lessCommonCountries.map(([country, count]) => (
-                  <Link href={searchLink("country", country)} key={country}>
-                    <span>{country}</span><strong>{count} {count === 1 ? "wine" : "wines"}</strong><b aria-hidden="true">›</b>
-                  </Link>
-                ))}
-              </div>
-            ) : <p className="overview-empty">Your country collection is evenly represented.</p>}
-          </section>
-
           <section className="overview-section" aria-labelledby="rated-title">
             <div className="overview-heading">
               <div><p className="eyebrow">Your ratings</p><h2 id="rated-title">Highest rated wines</h2></div>
@@ -314,6 +298,22 @@ export default async function Home() {
                 ))}
               </ol>
             ) : <p className="overview-empty">Your highest-rated wines will appear after you record a rating.</p>}
+          </section>
+
+          <section className="overview-section" aria-labelledby="unusual-title">
+            <div className="overview-heading">
+              <div><p className="eyebrow">Explore</p><h2 id="unusual-title">Less common in my cellar</h2></div>
+              <span>One or two wines</span>
+            </div>
+            {lessCommonCountries.length ? (
+              <div className="unusual-countries">
+                {lessCommonCountries.map(([country, count]) => (
+                  <Link href={searchLink("country", country)} key={country}>
+                    <span>{country}</span><strong>{count} {count === 1 ? "wine" : "wines"}</strong><b aria-hidden="true">›</b>
+                  </Link>
+                ))}
+              </div>
+            ) : <p className="overview-empty">Your country collection is evenly represented.</p>}
           </section>
         </div>
       )}
