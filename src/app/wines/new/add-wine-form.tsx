@@ -4,6 +4,7 @@ import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { makeLabelJpeg } from "@/lib/images/prepare-label";
+import { WINE_TYPES } from "@/lib/wine-types";
 
 type Shelf = { id: string; name: string };
 type ImageKind = "front" | "back";
@@ -155,6 +156,7 @@ export function AddWineForm({ shelves }: { shelves: Shelf[] }) {
           p_country: nullableText(form, "country"),
           p_region: nullableText(form, "region"),
           p_appellation: nullableText(form, "appellation"),
+          p_wine_type: nullableText(form, "wine_type"),
           p_quantity: Number(form.get("quantity") ?? 1),
           p_drink_from_year: nullableNumber(form, "drink_from_year"),
           p_drink_until_year: nullableNumber(form, "drink_until_year"),
@@ -273,6 +275,13 @@ export function AddWineForm({ shelves }: { shelves: Shelf[] }) {
               <label><input name="bottle_size_ml" type="radio" value="375" /><span>½ bottle</span></label>
             </div>
           </fieldset>
+          <label className="full-field">
+            <span>Wine type</span>
+            <select defaultValue="" name="wine_type">
+              <option value="">Not set</option>
+              {WINE_TYPES.map((type) => <option key={type} value={type}>{type}</option>)}
+            </select>
+          </label>
           <label>
             <span>Country</span>
             <input autoComplete="off" name="country" />

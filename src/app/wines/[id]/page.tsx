@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { WineActions } from "./wine-actions";
+import type { WineType } from "@/lib/wine-types";
 
 type Wine = {
   id: string;
@@ -12,6 +13,7 @@ type Wine = {
   country: string | null;
   region: string | null;
   appellation: string | null;
+  wine_type: WineType | null;
   current_quantity: number;
   drink_from_year: number | null;
   drink_until_year: number | null;
@@ -234,6 +236,7 @@ export default async function WineDetailPage({
             <p className="quiet-copy">No personal notes yet.</p>
           )}
           <dl className="wine-facts">
+            {wine.wine_type ? <div><dt>Wine type</dt><dd>{wine.wine_type}</dd></div> : null}
             {grapes.length ? <div><dt>Grapes</dt><dd>{grapes.join(", ")}</dd></div> : null}
             {wine.source ? <div><dt>Source</dt><dd>{wine.source}</dd></div> : null}
             {wine.purchase_price_pence !== null ? (

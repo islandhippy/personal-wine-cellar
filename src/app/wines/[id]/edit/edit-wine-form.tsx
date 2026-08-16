@@ -4,6 +4,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { makeLabelJpeg, thumbnailPath } from "@/lib/images/prepare-label";
+import { WINE_TYPES, type WineType } from "@/lib/wine-types";
 
 type Shelf = { id: string; name: string };
 type ImageKind = "front" | "back";
@@ -23,6 +24,7 @@ type EditableWine = {
   country: string | null;
   region: string | null;
   appellation: string | null;
+  wine_type: WineType | null;
   drink_from_year: number | null;
   drink_until_year: number | null;
   shelf_id: string | null;
@@ -173,6 +175,7 @@ export function EditWineForm({
         country: text(form, "country"),
         region: text(form, "region"),
         appellation: text(form, "appellation"),
+        wine_type: text(form, "wine_type"),
         drink_from_year: number(form, "drink_from_year"),
         drink_until_year: number(form, "drink_until_year"),
         shelf_id: text(form, "shelf_id"),
@@ -231,6 +234,7 @@ export function EditWineForm({
           <label className="full-field"><span>Producer</span><input defaultValue={wine.producer ?? ""} name="producer" /></label>
           <label><span>Vintage</span><input defaultValue={wine.vintage_year ?? ""} inputMode="numeric" max="2100" min="1000" name="vintage_year" placeholder="NV" type="number" /></label>
           <fieldset className="bottle-size-field"><legend>Bottle size</legend><div className="segmented-control"><label><input defaultChecked={wine.bottle_size_ml === 750} name="bottle_size_ml" type="radio" value="750" /><span>Standard</span></label><label><input defaultChecked={wine.bottle_size_ml === 375} name="bottle_size_ml" type="radio" value="375" /><span>½ bottle</span></label></div></fieldset>
+          <label className="full-field"><span>Wine type</span><select defaultValue={wine.wine_type ?? ""} name="wine_type"><option value="">Not set</option>{WINE_TYPES.map((type) => <option key={type} value={type}>{type}</option>)}</select></label>
           <label><span>Country</span><input defaultValue={wine.country ?? ""} name="country" /></label>
           <label><span>Region</span><input defaultValue={wine.region ?? ""} name="region" /></label>
           <label className="full-field"><span>Appellation</span><input defaultValue={wine.appellation ?? ""} name="appellation" /></label>

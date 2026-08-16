@@ -42,6 +42,7 @@ The database rejects any operation that would reduce a quantity below zero. Drin
 - One fridge, with no separate storage-area table.
 - One shelf per wine record, with no split shelf balances.
 - Bottle size is 750 ml by default or 375 ml for a half bottle.
+- Wine type is optional and uses one principal value: Red, White, Rosé, Sparkling, Sweet or Fortified.
 - Prices are optional GBP prices per bottle and are stored as integer pennies.
 - Blank vintage means non-vintage and is displayed as `NV` by the application.
 - Archiving is independent of quantity; reaching zero never deletes or archives a wine automatically.

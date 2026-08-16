@@ -50,8 +50,8 @@ export async function GET(request: Request) {
     }
 
     return csvResponse(`wine-cellar-${stamp}.csv`, makeCsv(
-      ["wine_id", "producer", "wine_cuvee", "vintage", "bottle_size_ml", "country", "region", "appellation", "grapes", "current_quantity", "drink_from_year", "drink_until_year", "shelf", "source", "purchase_price_gbp", "cellar_notes", "status", "created_at", "modified_at"],
-      (wines ?? []).map((wine) => [wine.id, wine.producer, wine.name, wine.vintage_year ?? "NV", wine.bottle_size_ml, wine.country, wine.region, wine.appellation, (grapes.get(wine.id) ?? []).join("; "), wine.current_quantity, wine.drink_from_year, wine.drink_until_year, relationName(wine.shelves), wine.source, wine.purchase_price_pence === null ? null : (wine.purchase_price_pence / 100).toFixed(2), wine.cellar_notes, wine.status, wine.created_at, wine.updated_at]),
+      ["wine_id", "producer", "wine_cuvee", "wine_type", "vintage", "bottle_size_ml", "country", "region", "appellation", "grapes", "current_quantity", "drink_from_year", "drink_until_year", "shelf", "source", "purchase_price_gbp", "cellar_notes", "status", "created_at", "modified_at"],
+      (wines ?? []).map((wine) => [wine.id, wine.producer, wine.name, wine.wine_type, wine.vintage_year ?? "NV", wine.bottle_size_ml, wine.country, wine.region, wine.appellation, (grapes.get(wine.id) ?? []).join("; "), wine.current_quantity, wine.drink_from_year, wine.drink_until_year, relationName(wine.shelves), wine.source, wine.purchase_price_pence === null ? null : (wine.purchase_price_pence / 100).toFixed(2), wine.cellar_notes, wine.status, wine.created_at, wine.updated_at]),
     ));
   }
 

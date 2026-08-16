@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { thumbnailPath } from "@/lib/images/prepare-label";
+import { WINE_TYPES, type WineType } from "@/lib/wine-types";
 
 export const metadata = { title: "Search" };
 
@@ -9,6 +10,7 @@ type SearchParams = {
   region?: string | string[];
   vintage?: string | string[];
   shelf?: string | string[];
+  type?: string | string[];
 };
 
 type SearchWine = {
@@ -19,6 +21,7 @@ type SearchWine = {
   country: string | null;
   region: string | null;
   appellation: string | null;
+  wine_type: WineType | null;
   current_quantity: number;
   shelves: { id: string; name: string } | { id: string; name: string }[] | null;
   wine_images: { image_type: "front" | "back"; storage_path: string }[] | null;
@@ -57,11 +60,12 @@ export default async function SearchPage({
   const selectedRegion = parameter(params.region);
   const selectedVintage = parameter(params.vintage);
   const selectedShelf = parameter(params.shelf);
+  const selectedType = parameter(params.type);
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("wines")
     .select(
-      "id, producer, name, vintage_year, country, region, appellation, current_quantity, shelves(id, name), wine_images(image_type, storage_path), wine_grape_varieties(grape_varieties(name))",
+      "id, producer, name, vintage_year, country, region, appellation, wine_type, current_quantity, shelves(id, name), wine_images(image_type, storage_path), wine_grape_varieties(grape_varieties(name))",
     )
     .eq("status", "active")
     .gt("current_quantity", 0)
@@ -94,6 +98,7 @@ export default async function SearchPage({
       wine.country,
       wine.region,
       wine.appellation,
+      wine.wine_type,
       ...grapes(wine),
     ]
       .filter(Boolean)
@@ -108,7 +113,8 @@ export default async function SearchPage({
         (selectedVintage === "nv"
           ? wine.vintage_year === null
           : wine.vintage_year?.toString() === selectedVintage)) &&
-      (!selectedShelf || location?.id === selectedShelf)
+      (!selectedShelf || location?.id === selectedShelf) &&
+      (!selectedType || wine.wine_type === selectedType)
     );
   });
 
@@ -123,7 +129,7 @@ export default async function SearchPage({
   const signedUrl = new Map(
     (signedImages ?? []).map((image) => [image.path, image.signedUrl]),
   );
-  const filtersApplied = Boolean(query || selectedRegion || selectedVintage || selectedShelf);
+  const filtersApplied = Boolean(query || selectedRegion || selectedVintage || selectedShelf || selectedType);
 
   return (
     <main className="search-shell">
@@ -170,6 +176,13 @@ export default async function SearchPage({
             <select defaultValue={selectedShelf} name="shelf">
               <option value="">All shelves</option>
               {shelves.map((location) => <option key={location.id} value={location.id}>{location.name}</option>)}
+            </select>
+          </label>
+          <label>
+            <span>Wine type</span>
+            <select defaultValue={selectedType} name="type">
+              <option value="">All types</option>
+              {WINE_TYPES.map((type) => <option key={type} value={type}>{type}</option>)}
             </select>
           </label>
         </div>
