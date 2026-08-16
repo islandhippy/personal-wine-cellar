@@ -210,7 +210,6 @@ export default async function Home() {
           <section className="overview-section" aria-labelledby="special-title">
             <div className="overview-heading">
               <div><p className="eyebrow">Highlights</p><h2 id="special-title">Special bottles</h2></div>
-              <span>Recorded above £30</span>
             </div>
             {specialWines.length ? (
               <div className="special-wines">
