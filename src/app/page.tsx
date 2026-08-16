@@ -22,6 +22,15 @@ type ChartItem = {
   href?: string;
 };
 
+type RatedEvent = {
+  rating: number | null;
+  drank_at: string;
+  wines:
+    | { id: string; name: string | null; producer: string | null; current_quantity: number }
+    | { id: string; name: string | null; producer: string | null; current_quantity: number }[]
+    | null;
+};
+
 const TYPE_COLORS: Record<string, string> = {
   Red: "#78283e",
   White: "#d8b96c",
@@ -96,12 +105,19 @@ function DonutChart({ items, title, total }: { items: ChartItem[]; title: string
 
 export default async function Home() {
   const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("wines")
-    .select("id, producer, name, vintage_year, current_quantity, country, wine_type, purchase_price_pence, wine_images(image_type, storage_path)")
-    .eq("status", "active")
-    .gt("current_quantity", 0)
-    .order("updated_at", { ascending: false });
+  const [{ data, error }, { data: ratingData, error: ratingError }] = await Promise.all([
+    supabase
+      .from("wines")
+      .select("id, producer, name, vintage_year, current_quantity, country, wine_type, purchase_price_pence, wine_images(image_type, storage_path)")
+      .eq("status", "active")
+      .gt("current_quantity", 0)
+      .order("updated_at", { ascending: false }),
+    supabase
+      .from("drinking_events")
+      .select("rating, drank_at, wines(id, name, producer, current_quantity)")
+      .not("rating", "is", null)
+      .order("drank_at", { ascending: false }),
+  ]);
 
   const wines = (data ?? []) as unknown as CellarWine[];
   const bottleCount = wines.reduce((total, wine) => total + wine.current_quantity, 0);
@@ -157,6 +173,40 @@ export default async function Home() {
   const lessCommonCountries = [...countryWines.entries()]
     .filter(([country, count]) => country !== "Not set" && count <= 2)
     .sort((a, b) => a[1] - b[1] || a[0].localeCompare(b[0]));
+
+  const ratingGroups = new Map<string, {
+    id: string;
+    name: string | null;
+    producer: string | null;
+    currentQuantity: number;
+    ratings: number[];
+    latest: string;
+  }>();
+  for (const event of (ratingData ?? []) as unknown as RatedEvent[]) {
+    const relatedWine = Array.isArray(event.wines) ? event.wines[0] : event.wines;
+    if (!relatedWine || event.rating === null) continue;
+    const existing = ratingGroups.get(relatedWine.id);
+    if (existing) {
+      existing.ratings.push(event.rating);
+      if (event.drank_at > existing.latest) existing.latest = event.drank_at;
+    } else {
+      ratingGroups.set(relatedWine.id, {
+        id: relatedWine.id,
+        name: relatedWine.name,
+        producer: relatedWine.producer,
+        currentQuantity: relatedWine.current_quantity,
+        ratings: [event.rating],
+        latest: event.drank_at,
+      });
+    }
+  }
+  const highestRated = [...ratingGroups.values()]
+    .map((wine) => ({
+      ...wine,
+      average: wine.ratings.reduce((sum, rating) => sum + rating, 0) / wine.ratings.length,
+    }))
+    .sort((a, b) => b.average - a.average || b.ratings.length - a.ratings.length || b.latest.localeCompare(a.latest))
+    .slice(0, 5);
 
   return (
     <main className="cellar-shell overview-shell">
@@ -240,6 +290,30 @@ export default async function Home() {
                 ))}
               </div>
             ) : <p className="overview-empty">Your country collection is evenly represented.</p>}
+          </section>
+
+          <section className="overview-section" aria-labelledby="rated-title">
+            <div className="overview-heading">
+              <div><p className="eyebrow">Your ratings</p><h2 id="rated-title">Highest rated wines</h2></div>
+            </div>
+            {ratingError ? (
+              <p className="overview-empty">Ratings could not be loaded just now.</p>
+            ) : highestRated.length ? (
+              <ol className="rated-wines">
+                {highestRated.map((wine, index) => (
+                  <li key={wine.id}>
+                    <Link href={`/wines/${wine.id}`}>
+                      <span className="rated-rank">{index + 1}</span>
+                      <span className="rated-copy">
+                        <strong>{[wine.name, wine.producer].filter(Boolean).join(" · ") || "Untitled wine"}</strong>
+                        <small>{wine.ratings.length} {wine.ratings.length === 1 ? "rating" : "ratings"} · {wine.currentQuantity > 0 ? `${wine.currentQuantity} in cellar` : "Finished"}</small>
+                      </span>
+                      <span className="rated-score">{wine.average.toFixed(1)}<small>/10</small></span>
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+            ) : <p className="overview-empty">Your highest-rated wines will appear after you record a rating.</p>}
           </section>
         </div>
       )}
