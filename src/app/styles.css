@@ -1558,6 +1558,25 @@ button:disabled {
   font-weight: 400;
 }
 
+.assistant-entry {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+  gap: 0.9rem;
+  align-items: center;
+  margin-top: 0.75rem;
+  padding: 1rem 1.1rem;
+  border-radius: 0.7rem;
+  background: var(--accent);
+  color: white;
+  text-decoration: none;
+}
+
+.assistant-entry > span:first-child { font-size: 1.25rem; text-align: center; }
+.assistant-entry > span:nth-child(2) { display: grid; gap: 0.2rem; }
+.assistant-entry strong { font-family: Iowan Old Style, Baskerville, "Times New Roman", serif; font-size: 1.08rem; }
+.assistant-entry small { color: rgb(255 255 255 / 78%); font-size: 0.72rem; }
+.assistant-entry b { font-size: 1.6rem; font-weight: 400; }
+
 .overview-content {
   display: grid;
   gap: 2.75rem;
@@ -1882,6 +1901,52 @@ button:disabled {
   font-weight: 650;
   text-decoration: none;
 }
+
+.assistant-shell { width: min(100%, 42rem); }
+.page-header { padding-top: 0.25rem; }
+.page-header .back-link { margin-bottom: 2.25rem; }
+.page-title { font-size: clamp(2.8rem, 13vw, 4.5rem); }
+.page-intro { max-width: 35rem; margin: 1.25rem 0 0; color: var(--muted); line-height: 1.6; }
+.assistant-panel { margin-top: 2rem; }
+.assistant-panel form { display: grid; gap: 0.8rem; }
+.assistant-panel label { font-size: 0.82rem; font-weight: 700; }
+.assistant-panel textarea {
+  width: 100%;
+  min-height: 7.5rem;
+  resize: vertical;
+  padding: 0.9rem;
+  border: 1px solid var(--divider);
+  border-radius: 0.7rem;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.assistant-panel textarea:focus { border-color: var(--accent); outline: 2px solid rgb(111 36 56 / 14%); }
+.assistant-panel .primary-action { width: 100%; padding: 0 1rem; }
+.assistant-suggestions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
+.assistant-suggestions button {
+  min-height: 2.5rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--divider);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--accent);
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+.assistant-error { margin-top: 1.25rem; padding: 1rem; border-radius: 0.6rem; background: #f5e4e4; color: #762c38; line-height: 1.5; }
+.assistant-answer { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--divider); }
+.assistant-answer > p:first-child { margin: 0 0 1.25rem; font-family: Iowan Old Style, Baskerville, "Times New Roman", serif; font-size: 1.25rem; line-height: 1.45; }
+.assistant-answer ol { display: grid; gap: 0.85rem; margin: 0; padding: 0; list-style: none; }
+.assistant-answer li a { display: grid; gap: 0.45rem; padding: 1rem; border: 1px solid var(--divider); border-radius: 0.7rem; background: var(--surface); color: var(--text); text-decoration: none; }
+.assistant-answer li strong { font-family: Iowan Old Style, Baskerville, "Times New Roman", serif; font-size: 1.12rem; }
+.assistant-answer li span { color: var(--text); font-size: 0.9rem; line-height: 1.5; }
+.assistant-answer li small { color: var(--muted); font-size: 0.76rem; line-height: 1.45; }
+.assistant-answer li b { margin-top: 0.2rem; color: var(--accent); font-size: 0.78rem; }
+.assistant-closing { margin: 1.25rem 0 0; color: var(--muted); line-height: 1.5; }
+.assistant-caution { margin: 1.5rem 0 0; color: var(--muted); font-size: 0.72rem; line-height: 1.45; }
 
 .feature-intro {
   margin-top: clamp(3rem, 14vh, 8rem);

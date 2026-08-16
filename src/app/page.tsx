@@ -238,6 +238,12 @@ export default async function Home() {
         <b aria-hidden="true">›</b>
       </Link>
 
+      <Link className="assistant-entry" href="/assistant">
+        <span aria-hidden="true">✦</span>
+        <span><strong>What shall I drink?</strong><small>Ask your personal wine assistant</small></span>
+        <b aria-hidden="true">›</b>
+      </Link>
+
       {error ? (
         <section className="cellar-message" role="alert">
           <p className="message-kicker">Cellar unavailable</p>
