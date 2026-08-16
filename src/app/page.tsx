@@ -10,8 +10,8 @@ type CellarWine = {
   region: string | null;
   drink_from_year: number | null;
   drink_until_year: number | null;
-  shelves: { name: string }[];
-  wine_images: { image_type: "front" | "back"; storage_path: string }[];
+  shelves: { name: string }[] | { name: string } | null;
+  wine_images: { image_type: "front" | "back"; storage_path: string }[] | null;
 };
 
 function wineTitle(wine: CellarWine) {
@@ -27,6 +27,13 @@ function drinkingWindow(wine: CellarWine) {
   return "No window set";
 }
 
+function shelfName(wine: CellarWine) {
+  if (!wine.shelves) return null;
+  return Array.isArray(wine.shelves)
+    ? wine.shelves[0]?.name ?? null
+    : wine.shelves.name;
+}
+
 export default async function Home() {
   const supabase = await createClient();
   const { data, error } = await supabase
@@ -38,9 +45,9 @@ export default async function Home() {
     .gt("current_quantity", 0)
     .order("updated_at", { ascending: false });
 
-  const wines = (data ?? []) as CellarWine[];
+  const wines = (data ?? []) as unknown as CellarWine[];
   const thumbnailPaths = wines.map((wine) => {
-    const path = wine.wine_images.find((image) => image.image_type === "front")?.storage_path;
+    const path = wine.wine_images?.find((image) => image.image_type === "front")?.storage_path;
     return path ? path.replace(/\.jpg$/, "-thumb.jpg") : null;
   });
   const pathsToSign = thumbnailPaths.filter((path): path is string => Boolean(path));
@@ -143,7 +150,7 @@ export default async function Home() {
                     </p>
                     <p className="wine-meta">
                       {drinkingWindow(wine)}
-                      {wine.shelves[0]?.name ? ` · ${wine.shelves[0].name}` : ""}
+                      {shelfName(wine) ? ` · ${shelfName(wine)}` : ""}
                     </p>
                   </div>
                   <div className="wine-quantity">
