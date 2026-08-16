@@ -255,6 +255,257 @@ button:disabled {
   }
 }
 
+.search-shell {
+  width: min(100%, 54rem);
+  min-height: 100svh;
+  margin: 0 auto;
+  padding: max(1.25rem, env(safe-area-inset-top))
+    max(1rem, env(safe-area-inset-right))
+    max(3rem, env(safe-area-inset-bottom))
+    max(1rem, env(safe-area-inset-left));
+}
+
+.search-header .eyebrow {
+  margin-top: 2rem;
+}
+
+.search-header h1 {
+  font-size: clamp(3rem, 14vw, 5rem);
+}
+
+.search-form {
+  margin-top: 1.75rem;
+  padding: 1rem;
+  border: 1px solid var(--divider);
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--surface) 64%, transparent);
+}
+
+.search-box {
+  display: flex;
+  min-height: 3.3rem;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0 0.9rem;
+  border: 1px solid var(--divider);
+  border-radius: 0.55rem;
+  background: var(--surface);
+}
+
+.search-box .search-symbol {
+  flex: 0 0 auto;
+  margin: 0 0 0.2rem;
+  color: var(--muted);
+}
+
+.search-box input {
+  width: 100%;
+  min-width: 0;
+  height: 3.1rem;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 1rem;
+}
+
+.search-filters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin-top: 0.8rem;
+}
+
+.search-filters label {
+  display: grid;
+  min-width: 0;
+  gap: 0.3rem;
+}
+
+.search-filters label > span {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 650;
+}
+
+.search-filters select {
+  width: 100%;
+  min-width: 0;
+  min-height: 2.8rem;
+  padding: 0.45rem;
+  border: 1px solid var(--divider);
+  border-radius: 0.45rem;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.75rem;
+}
+
+.search-submit-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.85rem;
+}
+
+.search-submit-row button {
+  min-height: 3rem;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--accent);
+  border-radius: 0.5rem;
+  background: var(--accent);
+  color: white;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.search-submit-row a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-underline-offset: 0.2em;
+}
+
+.search-results {
+  margin-top: 2rem;
+}
+
+.search-results-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.search-results-heading h2 {
+  margin: 0;
+  font-family: Iowan Old Style, Baskerville, "Times New Roman", serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.search-results-heading > span {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.search-results ol {
+  margin: 0.65rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.search-results li {
+  border-top: 1px solid var(--divider);
+}
+
+.search-results li > a {
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: center;
+  min-height: 6.2rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.search-results img,
+.search-label-placeholder {
+  display: grid;
+  width: 3.25rem;
+  height: 4.5rem;
+  place-items: center;
+  border: 1px solid var(--divider);
+  border-radius: 0.25rem;
+  background: var(--surface);
+  color: var(--accent);
+  font-family: Iowan Old Style, Baskerville, "Times New Roman", serif;
+  font-size: 1.15rem;
+  object-fit: cover;
+}
+
+.search-result-copy {
+  min-width: 0;
+}
+
+.search-result-copy h3,
+.search-result-copy p,
+.search-result-copy span {
+  overflow: hidden;
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-result-copy h3 {
+  font-family: Iowan Old Style, Baskerville, "Times New Roman", serif;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.search-result-copy p {
+  margin-top: 0.25rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.search-result-copy span {
+  display: block;
+  margin-top: 0.4rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+}
+
+.search-result-balance {
+  display: grid;
+  justify-items: end;
+}
+
+.search-result-balance strong {
+  font-family: Iowan Old Style, Baskerville, "Times New Roman", serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.search-result-balance span {
+  color: var(--muted);
+  font-size: 0.65rem;
+}
+
+.search-empty {
+  margin: 2.5rem 0;
+  color: var(--muted);
+  text-align: center;
+}
+
+.search-empty h3 {
+  margin: 0;
+  color: var(--text);
+  font-family: Iowan Old Style, Baskerville, "Times New Roman", serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+}
+
+.search-empty p {
+  margin: 0.55rem 0 0;
+  font-size: 0.85rem;
+}
+
+@media (min-width: 48rem) {
+  .search-shell {
+    padding: 3rem 4rem 5rem;
+  }
+
+  .search-form {
+    padding: 1.35rem;
+  }
+}
+
 .wine-detail-shell {
   width: min(100%, 64rem);
   min-height: 100svh;
