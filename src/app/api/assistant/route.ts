@@ -33,10 +33,10 @@ export async function POST(request: Request) {
 
   const { data: wines, error } = await supabase
     .from("wines")
-    .select("id, name, producer, vintage_year, bottle_size_ml, country, region, appellation, wine_type, current_quantity, drinking_window_start_year, drinking_window_end_year, personal_notes, purchase_price_pence, shelves(name), wine_grape_varieties(grape_varieties(name)), drinking_events(rating, tasting_note, drank_at)")
+    .select("id, name, producer, vintage_year, bottle_size_ml, country, region, appellation, wine_type, current_quantity, drink_from_year, drink_until_year, cellar_notes, purchase_price_pence, shelves(name), wine_grape_varieties(grape_varieties(name)), drinking_events(rating, tasting_note, drank_at)")
     .eq("status", "active")
     .gt("current_quantity", 0)
-    .order("drinking_window_end_year", { ascending: true, nullsFirst: false });
+    .order("drink_until_year", { ascending: true, nullsFirst: false });
 
   if (error) return NextResponse.json({ error: "Your cellar could not be read just now." }, { status: 500 });
   if (!wines?.length) return NextResponse.json({ error: "There are no bottles in your cellar yet." }, { status: 400 });
@@ -59,10 +59,10 @@ export async function POST(request: Request) {
       grapes,
       quantity: wine.current_quantity,
       shelf: shelf ?? "Shelf not set",
-      drinkingWindow: wine.drinking_window_start_year || wine.drinking_window_end_year
-        ? `${wine.drinking_window_start_year ?? "?"}–${wine.drinking_window_end_year ?? "?"}`
+      drinkingWindow: wine.drink_from_year || wine.drink_until_year
+        ? `${wine.drink_from_year ?? "?"}–${wine.drink_until_year ?? "?"}`
         : null,
-      cellarNotes: wine.personal_notes,
+      cellarNotes: wine.cellar_notes,
       previousExperiences: events,
     };
   });
