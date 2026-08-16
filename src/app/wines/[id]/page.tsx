@@ -73,7 +73,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     .select("producer, name, vintage_year")
     .eq("id", id)
     .maybeSingle();
-  const title = [data?.producer, data?.name, data?.vintage_year ?? "NV"]
+  const title = [data?.name, data?.producer, data?.vintage_year ?? "NV"]
     .filter(Boolean)
     .join(" ");
   return { title: title || "Wine Detail" };
@@ -157,7 +157,7 @@ export default async function WineDetailPage({
   const identity = [wine.country, wine.region, wine.appellation]
     .filter(Boolean)
     .join(" · ");
-  const title = [wine.producer, wine.name].filter(Boolean).join(" · ") || "Untitled wine";
+  const title = [wine.name, wine.producer].filter(Boolean).join(" · ") || "Untitled wine";
 
   return (
     <main className="wine-detail-shell">

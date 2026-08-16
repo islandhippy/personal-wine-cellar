@@ -15,7 +15,7 @@ type CellarWine = {
 };
 
 function wineTitle(wine: CellarWine) {
-  return [wine.producer, wine.name].filter(Boolean).join(" · ") || "Untitled wine";
+  return [wine.name, wine.producer].filter(Boolean).join(" · ") || "Untitled wine";
 }
 
 function drinkingWindow(wine: CellarWine) {

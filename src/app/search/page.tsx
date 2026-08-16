@@ -44,7 +44,7 @@ function grapes(wine: SearchWine) {
 }
 
 function title(wine: SearchWine) {
-  return [wine.producer, wine.name].filter(Boolean).join(" · ") || "Untitled wine";
+  return [wine.name, wine.producer].filter(Boolean).join(" · ") || "Untitled wine";
 }
 
 export default async function SearchPage({

@@ -255,12 +255,12 @@ export function AddWineForm({ shelves }: { shelves: Shelf[] }) {
         </div>
         <div className="field-grid">
           <label className="full-field">
-            <span>Producer</span>
-            <input autoComplete="off" name="producer" placeholder="e.g. Château Musar" />
+            <span>Wine / cuvée</span>
+            <input autoComplete="off" name="name" placeholder="e.g. Château Musar" />
           </label>
           <label className="full-field">
-            <span>Wine / cuvée</span>
-            <input autoComplete="off" name="name" placeholder="Optional" />
+            <span>Producer</span>
+            <input autoComplete="off" name="producer" placeholder="Optional" />
           </label>
           <label>
             <span>Vintage</span>

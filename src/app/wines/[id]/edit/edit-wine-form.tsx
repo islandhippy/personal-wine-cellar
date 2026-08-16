@@ -227,8 +227,8 @@ export function EditWineForm({
       <section className="form-section">
         <div className="form-section-heading"><p>2</p><div><h2>The wine</h2><span>Correct or complete its identity.</span></div></div>
         <div className="field-grid">
-          <label className="full-field"><span>Producer</span><input defaultValue={wine.producer ?? ""} name="producer" /></label>
           <label className="full-field"><span>Wine / cuvée</span><input defaultValue={wine.name ?? ""} name="name" /></label>
+          <label className="full-field"><span>Producer</span><input defaultValue={wine.producer ?? ""} name="producer" /></label>
           <label><span>Vintage</span><input defaultValue={wine.vintage_year ?? ""} inputMode="numeric" max="2100" min="1000" name="vintage_year" placeholder="NV" type="number" /></label>
           <fieldset className="bottle-size-field"><legend>Bottle size</legend><div className="segmented-control"><label><input defaultChecked={wine.bottle_size_ml === 750} name="bottle_size_ml" type="radio" value="750" /><span>Standard</span></label><label><input defaultChecked={wine.bottle_size_ml === 375} name="bottle_size_ml" type="radio" value="375" /><span>½ bottle</span></label></div></fieldset>
           <label><span>Country</span><input defaultValue={wine.country ?? ""} name="country" /></label>

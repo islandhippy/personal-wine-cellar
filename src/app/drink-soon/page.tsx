@@ -64,7 +64,7 @@ function shelfName(wine: DrinkSoonWine) {
 }
 
 function title(wine: DrinkSoonWine) {
-  return [wine.producer, wine.name].filter(Boolean).join(" · ") || "Untitled wine";
+  return [wine.name, wine.producer].filter(Boolean).join(" · ") || "Untitled wine";
 }
 
 function windowText(wine: DrinkSoonWine) {
