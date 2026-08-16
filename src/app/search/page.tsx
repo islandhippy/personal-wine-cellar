@@ -8,9 +8,11 @@ export const metadata = { title: "Search" };
 type SearchParams = {
   q?: string | string[];
   region?: string | string[];
+  country?: string | string[];
   vintage?: string | string[];
   shelf?: string | string[];
   type?: string | string[];
+  size?: string | string[];
 };
 
 type SearchWine = {
@@ -22,6 +24,7 @@ type SearchWine = {
   region: string | null;
   appellation: string | null;
   wine_type: WineType | null;
+  bottle_size_ml: number;
   current_quantity: number;
   shelves: { id: string; name: string } | { id: string; name: string }[] | null;
   wine_images: { image_type: "front" | "back"; storage_path: string }[] | null;
@@ -58,20 +61,25 @@ export default async function SearchPage({
   const params = await searchParams;
   const query = parameter(params.q).trim();
   const selectedRegion = parameter(params.region);
+  const selectedCountry = parameter(params.country);
   const selectedVintage = parameter(params.vintage);
   const selectedShelf = parameter(params.shelf);
   const selectedType = parameter(params.type);
+  const selectedSize = parameter(params.size);
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("wines")
     .select(
-      "id, producer, name, vintage_year, country, region, appellation, wine_type, current_quantity, shelves(id, name), wine_images(image_type, storage_path), wine_grape_varieties(grape_varieties(name))",
+      "id, producer, name, vintage_year, bottle_size_ml, country, region, appellation, wine_type, current_quantity, shelves(id, name), wine_images(image_type, storage_path), wine_grape_varieties(grape_varieties(name))",
     )
     .eq("status", "active")
     .gt("current_quantity", 0)
     .order("producer", { ascending: true, nullsFirst: false });
 
   const allWines = (data ?? []) as unknown as SearchWine[];
+  const countries = [...new Set(allWines.flatMap((wine) => (wine.country ? [wine.country] : [])))].sort(
+    (a, b) => a.localeCompare(b),
+  );
   const regions = [...new Set(allWines.flatMap((wine) => (wine.region ? [wine.region] : [])))].sort(
     (a, b) => a.localeCompare(b),
   );
@@ -108,13 +116,15 @@ export default async function SearchPage({
 
     return (
       (!normalizedQuery || searchable.includes(normalizedQuery)) &&
+      (!selectedCountry || wine.country === selectedCountry) &&
       (!selectedRegion || wine.region === selectedRegion) &&
       (!selectedVintage ||
         (selectedVintage === "nv"
           ? wine.vintage_year === null
           : wine.vintage_year?.toString() === selectedVintage)) &&
       (!selectedShelf || location?.id === selectedShelf) &&
-      (!selectedType || wine.wine_type === selectedType)
+      (!selectedType || wine.wine_type === selectedType) &&
+      (!selectedSize || wine.bottle_size_ml.toString() === selectedSize)
     );
   });
 
@@ -129,7 +139,7 @@ export default async function SearchPage({
   const signedUrl = new Map(
     (signedImages ?? []).map((image) => [image.path, image.signedUrl]),
   );
-  const filtersApplied = Boolean(query || selectedRegion || selectedVintage || selectedShelf || selectedType);
+  const filtersApplied = Boolean(query || selectedCountry || selectedRegion || selectedVintage || selectedShelf || selectedType || selectedSize);
 
   return (
     <main className="search-shell">
@@ -155,6 +165,13 @@ export default async function SearchPage({
           />
         </label>
         <div className="search-filters">
+          <label>
+            <span>Country</span>
+            <select defaultValue={selectedCountry} name="country">
+              <option value="">All countries</option>
+              {countries.map((country) => <option key={country} value={country}>{country}</option>)}
+            </select>
+          </label>
           <label>
             <span>Region</span>
             <select defaultValue={selectedRegion} name="region">
@@ -183,6 +200,14 @@ export default async function SearchPage({
             <select defaultValue={selectedType} name="type">
               <option value="">All types</option>
               {WINE_TYPES.map((type) => <option key={type} value={type}>{type}</option>)}
+            </select>
+          </label>
+          <label>
+            <span>Bottle size</span>
+            <select defaultValue={selectedSize} name="size">
+              <option value="">All sizes</option>
+              <option value="750">Standard bottle</option>
+              <option value="375">½ bottle</option>
             </select>
           </label>
         </div>
